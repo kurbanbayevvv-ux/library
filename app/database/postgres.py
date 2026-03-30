@@ -23,12 +23,17 @@ cur.execute(
 """
 )
 
-def kitoblar():
-    sql = "SELECT name, file_id FROM books ORDER BY id"
-    cur.execute(sql)
+def getBooks(offset=0, limit=10):
+    sql = "SELECT name, file_id FROM books ORDER BY id LIMIT %s OFFSET %s"
+    cur.execute(sql, (limit, offset))
     return cur.fetchall()
 
 def saveBook(name, file_id):
     sql = "INSERT INTO books(name, file_id) VALUES (%s, %s)"
     cur.execute(sql,(name, file_id))
     conn.commit()
+
+def allBookCount():
+    sql = "SELECT COUNT(*) FROM books"
+    cur.execute(sql)
+    return cur.fetchone()[0]

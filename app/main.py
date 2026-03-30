@@ -5,11 +5,10 @@ import os
 from aiogram import Bot, Dispatcher
 from dotenv import load_dotenv
 
-# from handlers.register import router as register
-# from handlers.admin import router as admin
-# from handlers.menu import router as menu
 from handlers.start import router as start_router
+from handlers.query import router as query_router
 from handlers.download_book import router as download_book_router
+from handlers.book_channel import router as book_channel_router
 
 load_dotenv()
 BOT_TOKEN = os.getenv("BOT_TOKEN")
@@ -20,11 +19,11 @@ async def main():
     bot = Bot(token=BOT_TOKEN)
     dp = Dispatcher()
 
+    # router ulash
     dp.include_router(start_router)
+    dp.include_router(query_router)
     dp.include_router(download_book_router)
-    # dp.include_router(register)
-    # dp.include_router(admin)
-    # dp.include_router(menu)
+    dp.include_router(book_channel_router)
 
     print("Bot ishga tushdi...")
 
